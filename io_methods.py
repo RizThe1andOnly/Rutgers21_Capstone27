@@ -27,6 +27,9 @@ DATA_FILE_PATH = "./*_graphData.txt"
 """
 
 def plot_acc(accuracies:List[float],xRange:List[float]=None):
+    r"""
+        Plots accuracy vs dissimilarity range for a particular test run on a model with a particular adversarial attack.
+    """
     plt.figure()
     plt.clf()
     plt.title('Accuracies')
@@ -41,6 +44,33 @@ def plot_acc(accuracies:List[float],xRange:List[float]=None):
 def generateCumulativeGraph(filePaths:str = DATA_FILE_PATH,gTitle:str='',xRange:List[float] = None,singleSet:bool = False,genSingleSetTxt:str = '',\
                             altColors:bool=False,altPaletteFilePath:str='./dimmed_palette.txt'):
     r"""
+        Creates a graph with that maps the performances of several defenses with same range of dissimilarity factors. For each defense,
+        there is a separate line in the graph. Each line's data is obtained from a separate text file that has to be present, the text
+        files have to be setup beforehand by running the test methods. All of the text files have to have a common sequence at the end
+        of their names, by default it is "_graphData.txt".
+        
+        ***
+        
+        There are cases where subsets of a larger dissimilarity set are tested separately and their output recorded in separate text
+        files. In those cases, this method can aggregate all of that data and put them in a single line graph. This method will also
+        write the aggregate data into a separate text file.
+        
+        ***
+        
+        Note: See [1] in README.md->References for details on Dissimilarity factor.
+
+        -------------------------
+        params:
+            - filePaths: The common sequence at the end of the output files names/path that is searched for
+            - gTitle: The title of the graph
+            - xRange: The range for the x-axis, for the dissimilarity factor
+            - singleSet: If True then the input files are subsets of a larger set, used for the special cases noted above.
+            - genSingleSetTxt: Name/path of the file where the aggregate data for subsets will be placed. See special case
+                                description above for details.
+            - altColors: If True then certain defenses will have different colors than what is specified in their respective
+                        text files.
+            - altPaletteFilePath: File that contains the alternate colors or line shape for defenses that will be represented
+                                in a different way than other defenses.
     """
 
     xRange = np.arange(0,0.08,0.005) if xRange is None else xRange
@@ -123,6 +153,7 @@ def write_graph_data(data:List[float],label:str,color:str,fileName:str,x_range:L
 # Utility Functions for reading input data
 def _read_data_files(path:str = DATA_FILE_PATH):
     r"""
+        Helper method that reads the output text files and extracts data that is contained within.
     """
     graphDict_list = []
     filePaths = glob.glob(path)
