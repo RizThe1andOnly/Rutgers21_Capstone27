@@ -46,11 +46,11 @@ def getModelandDataset(modelParamPath:str,dataId:int,transformer:Any,batchSize:6
         should be prepared in advanced with the desired defensive transformation.
         ------------------------
         @params:
-            - modelParamPath:str - path to the pre-trained model parameters
-            - dataId:int - id for the dataset to be loaded, the constants for this parameters can be imported from the resourceLoader file
-            - transformer - defensive transformation to be applied to dataset, they can be imported from resourceLoader (this) file
-            - batchSize - size of each batch in the dataset
-            - train - whether the training dataset should be loaded or the test
+            - modelParamPath: path to the pre-trained model parameters
+            - dataId: id for the dataset to be loaded, the constants for this parameters can be imported from the resourceLoader file
+            - transformer: defensive transformation to be applied to dataset, they can be imported from resourceLoader (this) file
+            - batchSize: size of each batch in the dataset
+            - train: whether the training dataset should be loaded or the test
         ------------------------
         @returns:
             - Tuple:
@@ -66,7 +66,12 @@ def getModelandDataset(modelParamPath:str,dataId:int,transformer:Any,batchSize:6
     return model,dataLoader
 
 def _loadModelAndDataset(model:torch.nn.Module,modelPath:str,dataId:int,transformer:Any,batchSize:int,train:bool=False)->Tuple[torch.nn.Module,DataLoader]:
-
+    r"""
+        Helper method to load the pre-trained model state dictionary and dataset/dataloader. This function has a model parameter
+        that can accept any model. Being able to accept any model is different from the exposed getModelandDataset() model which
+        will only load the ResNet18 model. getModelandDataset() calls this method with the ResNet18 model, this method can also
+        be used in a standalone method to work with any other model.
+    """
     if modelPath == '':
         dataLoader = None
         if dataId == ID_MNIST:

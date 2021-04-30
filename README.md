@@ -20,8 +20,12 @@ famous adversarial attacks and input transformations for defenses.
 ### Contents
 
 - Attacks and defenses are defined in the correlating files.
-- drivers.py contains the code that runs tests on models with the given adversarial and defensive transformations.
+- train_drivers.py contains code to retrain the models obtained from torchvision.models
+- test_drivers.py contains the code that runs tests on models with the given adversarial and defensive transformations.
+- driver_utilities.py has common methods used by train and test drivers.
 - io_methods.py has methods that show figures and write output data to text files.
+- sampling.py has methods that display images with and without adversarial transformations.
+- resourceLoader.py obtains the specified dataset and model (from those available in torchvision.datasets and torchvision.models respectfully)
 - main.py has an example on how to run the tests for the project.
 
 ----------------------------------------------
